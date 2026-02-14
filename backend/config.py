@@ -6,7 +6,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL",
-        "postgresql://paperpulse_user:paperpulse_pass@db:5432/paperpulse_db",
+        "postgresql://paperpulse_user:paperpulse_pass@localhost:5432/paperpulse_db",
     )
 
 

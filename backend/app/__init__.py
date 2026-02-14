@@ -23,8 +23,10 @@ def create_app(config_object="config.DevConfig"):
     with app.app_context():
         # Import and Register Blueprints
         from app.modules.papers.routes import papers_bp
+        from app.modules.authors.routes import authors_bp
 
         app.register_blueprint(papers_bp, url_prefix="/api/papers")
+        app.register_blueprint(authors_bp, url_prefix="/api/authors")
 
         # Register global error handler
         from app.common.error_handler import register_error_handlers

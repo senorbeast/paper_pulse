@@ -1,0 +1,43 @@
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=run.py
+      - FLASK_DEBUG=1
+      - DATABASE_URL=postgresql://paperpulse_user:paperpulse_pass@db:5432/paperpulse_db
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+
+  db:
+    image: ankane/pgvector
+    environment:
+      - POSTGRES_USER=paperpulse_user
+      - POSTGRES_PASSWORD=paperpulse_pass
+      - POSTGRES_DB=paperpulse_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

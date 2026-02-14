@@ -1,0 +1,220 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PaperPulse API",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "AuthorBaseDTO": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "bio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bio"
+          },
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ],
+        "title": "AuthorBaseDTO",
+        "type": "object"
+      },
+      "AuthorCreateDTO": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "bio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bio"
+          },
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ],
+        "title": "AuthorCreateDTO",
+        "type": "object"
+      },
+      "AuthorResponseDTO": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "bio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bio"
+          },
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "id"
+        ],
+        "title": "AuthorResponseDTO",
+        "type": "object"
+      },
+      "PaperBaseDTO": {
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "abstract": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Abstract"
+          },
+          "doi": {
+            "title": "Doi",
+            "type": "string"
+          },
+          "author_id": {
+            "title": "Author Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "title",
+          "doi",
+          "author_id"
+        ],
+        "title": "PaperBaseDTO",
+        "type": "object"
+      },
+      "PaperCreateDTO": {
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "abstract": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Abstract"
+          },
+          "doi": {
+            "title": "Doi",
+            "type": "string"
+          },
+          "author_id": {
+            "title": "Author Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "title",
+          "doi",
+          "author_id"
+        ],
+        "title": "PaperCreateDTO",
+        "type": "object"
+      },
+      "PaperResponseDTO": {
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "abstract": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Abstract"
+          },
+          "doi": {
+            "title": "Doi",
+            "type": "string"
+          },
+          "author_id": {
+            "title": "Author Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "title",
+          "doi",
+          "author_id",
+          "id"
+        ],
+        "title": "PaperResponseDTO",
+        "type": "object"
+      }
+    }
+  }
+}

@@ -76,3 +76,9 @@ clean:
 	rm -rf frontend/.next
 	rm -rf frontend/node_modules
 	rm -rf backend/.venv
+
+# ---- Generating -----
+
+gen-types:
+	cd backend && uv run python scripts/dump_schemas.py
+	cd frontend && node scripts/gen_zod.js

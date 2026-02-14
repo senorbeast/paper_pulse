@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "abstract": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Abstract"
+    },
+    "doi": {
+      "title": "Doi",
+      "type": "string"
+    },
+    "author_id": {
+      "title": "Author Id",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "title",
+    "doi",
+    "author_id"
+  ],
+  "title": "PaperCreateDTO",
+  "type": "object"
+}

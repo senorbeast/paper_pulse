@@ -1,0 +1,31 @@
+{
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "bio": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Bio"
+    },
+    "email": {
+      "format": "email",
+      "title": "Email",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ],
+  "title": "AuthorCreateDTO",
+  "type": "object"
+}

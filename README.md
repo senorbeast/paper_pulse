@@ -46,6 +46,7 @@ We provide a `Makefile` to simplify common tasks.
 | **Format** | `make format` | Auto-format Python (Ruff) and TypeScript (Prettier) files. |
 | **Lint** | `make lint` | Run static analysis to catch bugs. |
 | **Test** | `make test` | Run the backend test suite (Pytest). |
+| **Gen Types** | `make gen-types` | Sync backend Pydantic models to frontend Zod schemas. [Read More](docs/API_GENERATION.md) |
 | **Clean** | `make clean` | Remove artifacts and caches. |
 
 ### 📂 Directory Structure

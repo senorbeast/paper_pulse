@@ -12,9 +12,11 @@ def mock_repo():
 def test_create_author_success(mock_repo):
     # Setup mock
     mock_repo.get_by_email.return_value = None
-    mock_repo.create.return_value = Mock(
-        id=1, name="John Doe", bio="Researcher", email="john@example.com"
+    author = Mock(
+        id=1, bio="Researcher", email="john@example.com"
     )
+    author.name = "John Doe"
+    mock_repo.create.return_value = author
 
     service = AuthorService(repository=mock_repo)
     dto = AuthorCreateDTO(name="John Doe", bio="Researcher", email="john@example.com")

@@ -53,14 +53,14 @@ import { z } from 'zod';
       fileContent += `export const ${cleanKey}Schema = ${schemaWithTrim};\n`;
       fileContent += `export type ${cleanKey} = z.infer<typeof ${cleanKey}Schema>;\n\n`;
       
-      console.log(`✅ Converted ${key} -> ${cleanKey}`);
+      console.log(`Converted ${key} -> ${cleanKey}`);
     } catch (e) {
-      console.error(`❌ Error converting ${key}:`, e);
+      console.error(`Error converting ${key}:`, e);
     }
   }
 
   fs.writeFileSync(OUTPUT_FILE, fileContent);
-  console.log(`\n🎉 Schemas written to ${OUTPUT_FILE}`);
+  console.log(`\n Schemas written to ${OUTPUT_FILE}`);
 }
 
 generate();

@@ -14,7 +14,7 @@ class BaseRepository(Generic[T]):
         return self.session.get(self.model, id)
 
     def get_all(self, limit: int = 100, offset: int = 0) -> List[T]:
-        return self.session.query(self.model).limit(limit).offset(offset).all()
+        return self.session.query(self.model).order_by(self.model.id.desc()).limit(limit).offset(offset).all()
 
     def create(self, **kwargs) -> T:
         instance = self.model(**kwargs)

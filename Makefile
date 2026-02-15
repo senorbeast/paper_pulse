@@ -1,11 +1,12 @@
 
-.PHONY: install run-docker run-backend run-frontend lint format test clean help dev-db stop-db seed
+.PHONY: install run-docker run-backend run-frontend lint format test clean help dev-db stop-db seed dev-fresh
 
 # Default target
 help:
 	@echo "PaperPulse Makefile"
 	@echo "-------------------"
 	@echo "make install      - Install all dependencies (Backend + Frontend)"
+	@echo "make dev-fresh    - Fresh dev setup: Start DB + Seed + Run Backend & Frontend"
 	@echo "make dev-db       - Start only the Database (Docker) in background"
 	@echo "make run-backend  - Run Backend locally (Flask) with Hot Reload"
 	@echo "make run-frontend - Run Frontend locally (Next.js) with Hot Reload"
@@ -39,6 +40,22 @@ run-frontend:
 seed:
 	cd backend && uv run python seed.py
 
+dev-fresh:
+	@echo "🚀 Starting fresh development environment..."
+	@echo "📦 Starting database..."
+	@docker compose up -d db
+	@echo "⏳ Waiting for database to be ready..."
+	@sleep 5
+	@echo "🌱 Seeding database..."
+	@cd backend && uv run python seed.py
+	@echo "✅ Database ready and seeded!"
+	@echo "🔥 Starting backend and frontend in parallel..."
+	@echo "Press Ctrl+C to stop all services"
+	@trap 'docker compose down; exit' INT; \
+	cd backend && uv run python run.py & \
+	cd frontend && npm run dev & \
+	wait
+
 stop:
 	docker compose down
 
@@ -65,8 +82,13 @@ format-frontend:
 	cd frontend && npx prettier --write .
 
 # --- Testing ---
-test:
+test: test-backend test-frontend
+
+test-backend:
 	cd backend && uv run pytest
+
+test-frontend:
+	cd frontend && npm run test
 
 # --- Cleaning ---
 clean:
@@ -76,3 +98,9 @@ clean:
 	rm -rf frontend/.next
 	rm -rf frontend/node_modules
 	rm -rf backend/.venv
+
+# ---- Generating -----
+
+gen-types:
+	cd backend && uv run python scripts/dump_schemas.py
+	cd frontend && node scripts/gen_zod.js

@@ -21,6 +21,7 @@ def seed_database():
 
         # Clear existing data provided it's safe (dev only usually)
         print("Clearing existing data...")
+
         Paper.query.delete()
         Author.query.delete()
         db.session.commit()

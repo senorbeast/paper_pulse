@@ -2,6 +2,10 @@ from typing import List, Optional
 from app.modules.authors.repository import AuthorRepository
 from app.modules.authors.schemas import AuthorCreateDTO, AuthorResponseDTO
 from app.common.error_handler import AppError
+from pydantic import ValidationError
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class AuthorService:
@@ -23,4 +27,16 @@ class AuthorService:
 
     def get_all_authors(self) -> List[AuthorResponseDTO]:
         authors = self.repository.get_all()
-        return [AuthorResponseDTO.model_validate(a) for a in authors]
+        valid_authors = []
+        
+        for author in authors:
+            try:
+                valid_authors.append(AuthorResponseDTO.model_validate(author))
+            except ValidationError as e:
+                # Log the validation error and skip this author
+                logger.warning(
+                    f"Skipping author {author.id} due to validation error: {e}"
+                )
+                continue
+        
+        return valid_authors

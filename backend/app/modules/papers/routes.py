@@ -13,13 +13,7 @@ def create_paper():
         data = request.get_json()
         dto = PaperCreateDTO(**data)
         result = service.create_paper(dto)
-        # Spec says 200 if existing, 201 if created?
-        # The service returns the DTO. I don't know if it was created or existing from just the DTO.
-        # But commonly we might just return 200 for idempotency or check something.
-        # For now let's just return 200 OK as a safe bet for "idempotency" requirement usually implying "success without error".
-        # But strictly 201 is for creation.
-        # Let's assume 200 is acceptable for both or I'd need to change service return signature.
-        return jsonify(result.model_dump()), 200
+        return jsonify(result.model_dump()), 201
     except ValidationError as e:
         return jsonify(e.errors()), 400
 

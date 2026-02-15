@@ -1,10 +1,14 @@
-
 "use client";
-
+import Link from "next/link";
 import { useAuthors, useCreateAuthor } from "@/hooks/useAuthors";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthorCreate, AuthorCreateSchema } from "@/lib/api/schemas";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 export default function AuthorsPage() {
   const { data: authors, isLoading, error } = useAuthors();
@@ -16,11 +20,16 @@ export default function AuthorsPage() {
     reset,
     formState: { errors },
   } = useForm<AuthorCreate>({
-    resolver: zodResolver(AuthorCreateSchema),
+    resolver: zodResolver(AuthorCreateSchema) as any,
+    defaultValues: {
+      name: "",
+      email: "",
+      bio: null,
+    },
   });
 
-  const onSubmit = (data: AuthorCreate) => {
-    createMutation.mutate(data, {
+  const onSubmit = (data: any) => {
+    createMutation.mutate(data as AuthorCreate, {
       onSuccess: () => reset(),
     });
   };
@@ -33,67 +42,85 @@ export default function AuthorsPage() {
       <h1 className="text-3xl font-bold tracking-tight">Authors Management</h1>
 
       {/* Create Form */}
-      <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-        <h2 className="text-xl font-semibold mb-4">Add New Author</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Name</label>
-              <input
-                {...register("name")}
-                className="w-full bg-black/20 border border-white/10 rounded px-3 py-2"
-                placeholder="Dr. Jane Doe"
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-              )}
+      <Card>
+        <CardHeader>
+          <CardTitle>Add New Author</CardTitle>
+          <CardDescription>Register a new researcher in the system.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  {...register("name")}
+                  placeholder="Dr. Jane Doe"
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  {...register("email")}
+                  placeholder="jane@university.edu"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Email</label>
-              <input
-                {...register("email")}
-                className="w-full bg-black/20 border border-white/10 rounded px-3 py-2"
-                placeholder="jane@university.edu"
+            <div className="space-y-2">
+              <Label htmlFor="bio">Bio</Label>
+              <Textarea
+                id="bio"
+                {...register("bio")}
+                placeholder="Research interests..."
+                className="h-20"
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-              )}
             </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Bio</label>
-            <textarea
-              {...register("bio")}
-              className="w-full bg-black/20 border border-white/10 rounded px-3 py-2 h-20"
-              placeholder="Research interests..."
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={createMutation.isPending}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium disabled:opacity-50"
-          >
-            {createMutation.isPending ? "Creating..." : "Create Author"}
-          </button>
-        </form>
-      </div>
+            <Button
+              type="submit"
+              disabled={createMutation.isPending}
+              className="w-full sm:w-auto"
+            >
+              {createMutation.isPending ? "Creating..." : "Create Author"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
 
       {/* List */}
       <div className="grid grid-cols-1 gap-4">
         {authors?.map((author) => (
-          <div
+          <Link
+            href={`/authors/${author.id}`}
             key={author.id}
-            className="p-4 rounded-lg bg-white/5 border border-white/10 hover:border-blue-500/50 transition-colors"
+            className="block group"
           >
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-semibold text-lg">{author.name}</h3>
-                <p className="text-sm text-gray-400">{author.email}</p>
-                {author.bio && <p className="mt-2 text-sm text-gray-300">{author.bio}</p>}
-              </div>
-              <div className="text-xs font-mono text-gray-500">ID: {author.id}</div>
-            </div>
-          </div>
+            <Card className="hover:border-blue-500/50 hover:bg-white/10 transition-colors">
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-lg font-bold shrink-0 text-white">
+                      {author.name.charAt(0)}
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">{author.name}</CardTitle>
+                      <CardDescription>{author.email}</CardDescription>
+                    </div>
+                  </div>
+                  <div className="text-xs font-mono text-muted-foreground">ID: {author.id}</div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {author.bio && <p className="text-sm text-foreground/80 line-clamp-2">{author.bio}</p>}
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

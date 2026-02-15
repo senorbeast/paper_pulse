@@ -1,5 +1,5 @@
 
-# PaperPulse: High-Integrity Research Repository
+# PaperPulse: Research Repository 
 
 **Paper Pulse** is a comprehensive research management system designed to help researchers, institutions, and organizations manage their academic papers, authors, and research outputs efficiently. Built with modern technologies and architectural best practices, Paper Pulse provides robust paper cataloging, author management, and will soon support AI-powered semantic search capabilities to help discover relevant research across your repository.
 

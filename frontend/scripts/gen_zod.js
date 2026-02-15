@@ -48,7 +48,9 @@ import { z } from 'zod';
       });
 
       // 3. Append to file
-      const schemaWithTrim = zodSchema.replace(/z\.string\(\)/g, "z.string().trim()");
+      // Replace .default(null) with .optional() for better type compatibility with react-hook-form
+      let schemaWithTrim = zodSchema.replace(/z\.string\(\)/g, "z.string().trim()");
+      schemaWithTrim = schemaWithTrim.replace(/\.default\(null\)/g, ".optional()");
       
       fileContent += `export const ${cleanKey}Schema = ${schemaWithTrim};\n`;
       fileContent += `export type ${cleanKey} = z.infer<typeof ${cleanKey}Schema>;\n\n`;

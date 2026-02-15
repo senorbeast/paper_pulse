@@ -4,21 +4,21 @@
  */
 import { z } from 'zod';
 
-export const AuthorBaseSchema = z.object({ "name": z.string().trim().min(1).max(100), "bio": z.union([z.string().trim(), z.null()]).default(null), "email": z.string().trim().email().max(120) });
+export const AuthorBaseSchema = z.object({ "name": z.string().trim().min(1).max(100), "bio": z.union([z.string().trim(), z.null()]).optional(), "email": z.string().trim().email().max(120) });
 export type AuthorBase = z.infer<typeof AuthorBaseSchema>;
 
-export const AuthorCreateSchema = z.object({ "name": z.string().trim().min(1).max(100), "bio": z.union([z.string().trim(), z.null()]).default(null), "email": z.string().trim().email().max(120) });
+export const AuthorCreateSchema = z.object({ "name": z.string().trim().min(1).max(100), "bio": z.union([z.string().trim(), z.null()]).optional(), "email": z.string().trim().email().max(120) });
 export type AuthorCreate = z.infer<typeof AuthorCreateSchema>;
 
-export const AuthorResponseSchema = z.object({ "name": z.string().trim().min(1).max(100), "bio": z.union([z.string().trim(), z.null()]).default(null), "email": z.string().trim().email().max(120), "id": z.number().int() });
+export const AuthorResponseSchema = z.object({ "name": z.string().trim().min(1).max(100), "bio": z.union([z.string().trim(), z.null()]).optional(), "email": z.string().trim().email().max(120), "id": z.number().int() });
 export type AuthorResponse = z.infer<typeof AuthorResponseSchema>;
 
-export const PaperBaseSchema = z.object({ "title": z.string().trim().min(1).max(255), "abstract": z.union([z.string().trim(), z.null()]).default(null), "doi": z.string().trim().min(1).max(100), "author_id": z.number().int() });
+export const PaperBaseSchema = z.object({ "title": z.string().trim().min(1).max(255), "abstract": z.union([z.string().trim(), z.null()]).optional(), "doi": z.string().trim().min(1).max(100), "author_id": z.number().int() });
 export type PaperBase = z.infer<typeof PaperBaseSchema>;
 
-export const PaperCreateSchema = z.object({ "title": z.string().trim().min(1).max(255), "abstract": z.union([z.string().trim(), z.null()]).default(null), "doi": z.string().trim().min(1).max(100), "author_id": z.number().int() });
+export const PaperCreateSchema = z.object({ "title": z.string().trim().min(1).max(255), "abstract": z.union([z.string().trim(), z.null()]).optional(), "doi": z.string().trim().min(1).max(100), "author_id": z.number().int() });
 export type PaperCreate = z.infer<typeof PaperCreateSchema>;
 
-export const PaperResponseSchema = z.object({ "title": z.string().trim().min(1).max(255), "abstract": z.union([z.string().trim(), z.null()]).default(null), "doi": z.string().trim().min(1).max(100), "author_id": z.number().int(), "id": z.number().int() });
+export const PaperResponseSchema = z.object({ "title": z.string().trim().min(1).max(255), "abstract": z.union([z.string().trim(), z.null()]).optional(), "doi": z.string().trim().min(1).max(100), "author_id": z.number().int(), "id": z.number().int() });
 export type PaperResponse = z.infer<typeof PaperResponseSchema>;
 

@@ -18,7 +18,7 @@ class TestPapers(BaseTestCase):
             "author_id": author_id
         }
         create_resp = self.client.post("/api/papers/", json=paper_data)
-        assert create_resp.status_code == 200
+        assert create_resp.status_code == 201
         paper = create_resp.get_json()
         assert paper["title"] == "Quantum Physics"
         paper_id = paper["id"]

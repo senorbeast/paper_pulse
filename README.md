@@ -8,7 +8,7 @@ PaperPulse is a modular research management system built with Flask, Next.js, an
 | Criterion | Technical Implementation |
 | :--- | :--- |
 | **Structure** | **Domain-Driven Isolation:** Each feature (Papers, Authors, Analytics) is a self-contained internal package. |
-| **Simplicity** | **Explicit Mapping:** We use DTOs and a Service layer to avoid "Magic" ORM behaviors and keep logic predictable. |
+| **Simplicity** | **Explicit Mapping:** We use DTOs and a Service layer to keep things transparent. Services, DTOs can be used by other services/ transport layers to interact with the database. |
 | **Correctness** | **State Guards:** Relational constraints (Unique DOIs) and Pydantic validation prevent invalid data states. |
 | **Interface Safety** | **Contract-First:** Every API request/response is governed by a Pydantic DTO (Backend) and Zod Schema (Frontend). |
 | **Change Resilience** | **Repository Pattern:** Logic is decoupled from the ORM. Moving from Postgres to a Vector DB only impacts the Repository. |
@@ -19,7 +19,7 @@ PaperPulse is a modular research management system built with Flask, Next.js, an
 - **Backend**: Flask + Python 3.12+
   - **Manager**: `uv` (Fast Python package installer and resolver)
   - **Linter/Formatter**: `ruff` (High-performance Python linter)
-  - **DB**: PostgreSQL + `pgvector`
+  - **DB**: PostgreSQL
 - **Frontend**: Next.js (App Router) + TypeScript
   - **Styling**: Tailwind CSS
   - **Formatter**: Prettier

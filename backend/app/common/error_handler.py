@@ -9,9 +9,11 @@ class AppError(Exception):
         self.payload = payload
 
     def to_dict(self):
-        rv = dict(self.payload or ())
+        rv = {}
         rv["message"] = self.message
         rv["status_code"] = self.status_code
+        if self.payload is not None:
+            rv["payload"] = self.payload
         return rv
 
 

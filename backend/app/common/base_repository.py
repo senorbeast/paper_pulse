@@ -11,7 +11,7 @@ class BaseRepository(Generic[T]):
         self.session: Session = db.session
 
     def get_by_id(self, id: int) -> Optional[T]:
-        return self.session.query(self.model).get(id)
+        return self.session.get(self.model, id)
 
     def get_all(self, limit: int = 100, offset: int = 0) -> List[T]:
         return self.session.query(self.model).limit(limit).offset(offset).all()

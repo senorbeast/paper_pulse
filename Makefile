@@ -65,8 +65,13 @@ format-frontend:
 	cd frontend && npx prettier --write .
 
 # --- Testing ---
-test:
+test: test-backend test-frontend
+
+test-backend:
 	cd backend && uv run pytest
+
+test-frontend:
+	cd frontend && npm run test
 
 # --- Cleaning ---
 clean:

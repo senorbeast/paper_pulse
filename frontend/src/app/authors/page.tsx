@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { getApiErrorMessage } from "@/lib/utils";
 
 export default function AuthorsPage() {
   const { data: authors, isLoading, error } = useAuthors();
@@ -89,6 +90,11 @@ export default function AuthorsPage() {
             >
               {createMutation.isPending ? "Creating..." : "Create Author"}
             </Button>
+            {createMutation.isError && (
+              <p className="text-red-500 text-sm mt-2">
+                {getApiErrorMessage(createMutation.error)}
+              </p>
+            )}
           </form>
         </CardContent>
       </Card>

@@ -1,6 +1,8 @@
 
 "use client";
 
+import { getApiErrorMessage } from "@/lib/utils";
+
 import Link from "next/link";
 import { usePapers, useCreatePaper } from "@/hooks/usePapers";
 import { useAuthors } from "@/hooks/useAuthors";
@@ -126,6 +128,11 @@ export default function PapersPage() {
             >
               {createMutation.isPending ? "Submitting..." : "Submit Paper"}
             </Button>
+            {createMutation.isError && (
+              <p className="text-red-500 text-sm mt-2">
+                {getApiErrorMessage(createMutation.error)}
+              </p>
+            )}
           </form>
         </CardContent>
       </Card>

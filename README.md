@@ -45,7 +45,9 @@ We provide a `Makefile` to simplify common tasks.
 | **Run (Docker)** | `make run-docker` | Start the full stack (DB, Backend, Frontend) in Docker. |
 | **Format** | `make format` | Auto-format Python (Ruff) and TypeScript (Prettier) files. |
 | **Lint** | `make lint` | Run static analysis to catch bugs. |
-| **Test** | `make test` | Run the backend test suite (Pytest). |
+| **Test** | `make test` | Run the full test suite (Backend + Frontend). |
+| **Test Backend** | `make test-backend` | Run only backend tests (Pytest). |
+| **Test Frontend** | `make test-frontend` | Run only frontend tests (Vitest). |
 | **Gen Types** | `make gen-types` | Sync backend Pydantic models to frontend Zod schemas. [Read More](docs/API_GENERATION.md) |
 | **Clean** | `make clean` | Remove artifacts and caches. |
 
@@ -62,6 +64,7 @@ paper_pulse/
 │   └── uv.lock             # Python lockfile
 ├── frontend/               # Next.js Application
 │   ├── src/                # Source code
+│   ├── test/               # Vitest suite
 │   └── package.json        # Frontend dependencies
 ├── guidances/              # Engineering Handbooks & Specs
 └── Makefile                # Command shortcuts

@@ -48,7 +48,9 @@ import { z } from 'zod';
       });
 
       // 3. Append to file
-      fileContent += `export const ${cleanKey}Schema = ${zodSchema};\n`;
+      const schemaWithTrim = zodSchema.replace(/z\.string\(\)/g, "z.string().trim()");
+      
+      fileContent += `export const ${cleanKey}Schema = ${schemaWithTrim};\n`;
       fileContent += `export type ${cleanKey} = z.infer<typeof ${cleanKey}Schema>;\n\n`;
       
       console.log(`✅ Converted ${key} -> ${cleanKey}`);

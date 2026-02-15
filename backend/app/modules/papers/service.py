@@ -19,8 +19,6 @@ class PaperService:
             raise AppError("Author not found", 404)
 
         if self.repository.get_by_doi(data.doi):
-            # Spec says: "Idempotency: Re-submitting the same DOI must return the existing record (200 OK)"
-            # Wait, 200 OK means I should return the existing one, not error.
             existing = self.repository.get_by_doi(data.doi)
             return PaperResponseDTO.model_validate(existing)
 
